@@ -6,7 +6,7 @@ do
         hadoop fs -copyToLocal /user/hannesm/lsde/noaa/"$t".zip "$t".zip
         unzip "$t".zip
         hadoop fs -mkdir /user/lsde02/data/"$t"
-        hadoop fs -put "$t"/*.gz /user/lsde02/data/"$t"
+        hadoop fs -moveFromLocal "$t"/*.gz /user/lsde02/data/"$t"
         rm "$t".zip
         rm -rf "$t"/
         echo "Finished processing year $t."
