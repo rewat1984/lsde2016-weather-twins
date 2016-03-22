@@ -4,7 +4,10 @@ import math
 import utils
 from pyspark.context import SparkContext
 
-hdfs_file_path = "/user/lsde02/data/1901/*.gz"
+if (len(sys.argv) > 1:
+	hdfs_file_path = "/user/lsde02/data/%s/*.gz" % argv[1]
+else:
+	hdfs_file_path = "/user/lsde02/data/1901/*.gz"
 hdfs_results_path = "/user/lsde02/results/"
 start_time = time.strftime("%Y-%m-%d-%H-%M-%S")
 
