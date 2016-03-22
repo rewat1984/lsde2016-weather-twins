@@ -2,10 +2,12 @@ import sys
 import time
 import math
 import utils
+from pyspark.context import SparkContext
 
 hdfs_file_path = "/user/lsde02/data/1901/*.gz"
 hdfs_results_path = "/user/lsde02/results/"
 
+sc = SparkContext()
 context = sc.textFile(hdfs_file_path)
 stations = context.flatMap(lambda x: [utils.extract(record) for record in x.splitlines()])
 stations = stations.filter(lambda x: 'longitude' in x[1] and 'longitude' in x[1])

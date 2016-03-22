@@ -58,7 +58,7 @@ def verify_records(details):
 	else:
 		details['visibility'] = int(details['visibility'])
 
-	details.pop('sky-condition-q')
+	details.pop('visibility-q')
 
 	# Verify longitude
 	if details['longitude']=='+99999':
