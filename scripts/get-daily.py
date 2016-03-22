@@ -4,7 +4,7 @@ import math
 import utils
 from pyspark.context import SparkContext
 
-if (len(sys.argv) > 1:
+if (len(sys.argv) > 1):
 	hdfs_file_path = "/user/lsde02/data/%s/*.gz" % argv[1]
 else:
 	hdfs_file_path = "/user/lsde02/data/1901/*.gz"
