@@ -30,4 +30,8 @@ month_avg.saveAsTextFile("%s%s-%s" % (hdfs_results_path, start_time, 'sky-condit
 month_avg = utils.noaa_month_average(stations, 'visibility')
 month_avg = month_avg.coalesce(1, True)
 month_avg.saveAsTextFile("%s%s-%s" % (hdfs_results_path, start_time, 'visibility'))
+# Compute wind direction
+month_avg = utils.noaa_circ_average(stations, 'wind-direction')
+month_avg = month_avg.coalesce(1, True)
+month_avg.saveAsTextFile("%s%s-%s" % (hdfs_results_path, start_time, 'wind-direction'))
 

@@ -1,3 +1,5 @@
+import math
+
 def extract(x):
 	header = (int(x[15:19]), int(x[19:21]), int(x[21:23]), int(x[4:10])) # Year, Month, Day, ID
 	details = {}
@@ -75,6 +77,7 @@ def verify_records(details):
 def check_error_code(field, error_value, qfield, qcode1, qcode2):
 	return field == error_value or qfield == qcode1 or qfield == qcode2
 
+# Spark specific functions
 def noaa_month_average(context, attribute):
 	month_avg = context.filter(lambda x: attribute in x[1])
 	month_avg = month_avg.map(lambda x: ((x[0][0], x[0][1], x[0][3]), x[1][attribute]))
@@ -82,3 +85,11 @@ def noaa_month_average(context, attribute):
                                                 lambda x, value: (x[0] + value, x[1] + 1),\
                                                 lambda x, y: (x[0] + y[0], x[1] + y[1]))
 	return month_avg.map(lambda (label, (value_sum, count)): (label, float(value_sum)/count))
+
+def noaa_circ_average(context, attribute):
+	month_avg = context.filter(lambda x: attribute in x[1])
+	month_avg = month_avg.map(lambda x: ((x[0][0], x[0][1], x[0][3]), (math.sin(x[1][attribute]*math.pi/180.0), math.cos(x[1][attribute]*math.pi/180.0))))
+	month_avg = month_avg.combineByKey(lambda value: (value[0], value[1]),\
+						lambda x, value: (x[0]+value[0], x[1]+value[1]),\
+						lambda x,y: (x[0]+y[0], x[1]+y[1]))
+	return month_avg.map(lambda (label, (sin_sum, cos_sum)): (label, math.atan2(sin_sum, cos_sum)))
