@@ -10,7 +10,7 @@ hdfs_results_path = "/user/lsde02/results/"
 sc = SparkContext()
 context = sc.textFile(hdfs_file_path)
 stations = context.flatMap(lambda x: [utils.extract(record) for record in x.splitlines()])
-stations = stations.filter(lambda x: 'longitude' in x[1] and 'longitude' in x[1])
+stations = stations.filter(lambda x: 'longitude' in x[1] and 'latitude' in x[1])
 
 # Do computations on month level
 temp_month = stations.filter(lambda x: 'temp' in x[1]) # Keep only temperature
