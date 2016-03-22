@@ -3,9 +3,6 @@ import time
 import math
 import utils
 
-def check_error_code(field, error_value, qfield, qcode1, qcode2):
-	return field == error_value or qfield == qcode1 or qfield == qcode2
-
 hdfs_file_path = "/user/lsde02/data/1901/*.gz"
 hdfs_results_path = "/user/lsde02/results/"
 
