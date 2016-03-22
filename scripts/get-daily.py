@@ -8,13 +8,12 @@ hdfs_file_path = "/user/lsde02/data/1901/*.gz"
 hdfs_results_path = "/user/lsde02/results/"
 
 sc = SparkContext()
-sc.addPyFile("utils.py")
 context = sc.textFile(hdfs_file_path)
 stations = context.flatMap(lambda x: [utils.extract(record) for record in x.splitlines()])
 stations = stations.filter(lambda x: 'longitude' in x[1] and 'latitude' in x[1])
 
 # Do computations on month level
-temp_month_avg = noaa_month_average(stations, 'temp')
+temp_month_avg = utils.noaa_month_average(stations, 'temp')
 temp_month_avg = temp_month_avg.coalesce(1, True)
 
 temp_month_avg.saveAsTextFile("%s%s" % (hdfs_results_path, time.strftime("%Y-%m-%d-%H-%M-%S")))
