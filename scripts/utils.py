@@ -74,3 +74,11 @@ def verify_records(details):
 
 def check_error_code(field, error_value, qfield, qcode1, qcode2):
 	return field == error_value or qfield == qcode1 or qfield == qcode2
+
+def noaa_month_average(context, attribute):
+	month_avg = context.filter(lambda x: attribute in x[1])
+	month_avg = month_avg.map(lambda x: ((x[0][0], x[0][1], x[0][3]), x[1][attribute]))
+	month_avg = month_avg.combineByKey(lambda value: (value, 1),\
+                                                lambda x, value: (x[0] + value, x[1] + 1),\
+                                                lambda x, y: (x[0] + y[0], x[1] + y[1]))
+	return month_avg.map(lambda (label, (value_sum, count)): (label, float(value_sum)/count))
