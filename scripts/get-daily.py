@@ -14,7 +14,7 @@ stations = stations.filter(lambda x: 'longitude' in x[1] and 'latitude' in x[1])
 
 # Do computations on month level
 temp_month = stations.filter(lambda x: 'temp' in x[1]) # Keep only temperature
-temp_month = stations.map(lambda x: ((x[0][0], x[0][1], x[0][3]), x[1]['temp']))
+temp_month = temp_month.map(lambda x: ((x[0][0], x[0][1], x[0][3]), x[1]['temp']))
 temp_month_avg = temp_month.combineByKey(lambda value: (value, 1),\
 						lambda x, value: (x[0] + value, x[1] + 1),\
 						lambda x, y: (x[0] + y[0], x[1] + y[1]))
