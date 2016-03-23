@@ -285,7 +285,7 @@ function draw(topo) {
 
 
   //EXAMPLE: adding some capitals from external CSV file
-  d3.csv("data/country-capitals.csv", function(err, capitals) {
+  d3.csv("country-capitals.csv", function(err, capitals) {
 
     capitals.forEach(function(i){
       addpoint(i.CapitalLongitude, i.CapitalLatitude, i.CapitalName );
@@ -421,18 +421,7 @@ function addpoint(lat,lon,text) {
   }
 
 }
-$(function(){
-    $('#map-btn').click(function(event) {
-      var lat = $(this).data('lat');
-      var lng = $(this).data('lng');
-      showMap(lat,lng);
-    });
-});
 
-function showMap(lat,lng){
-   var url = "https://maps.google.com/?q=" + lat + "," + lng;
-   window.open(url);
-}
 </script>
 
   </body>
